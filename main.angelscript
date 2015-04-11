@@ -42,6 +42,11 @@ void GameOver()
 	LoadScene("scenes/gameover.esc", "", "");
 }
 
+void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
+{
+	PlaySample("soundfx/pew.wav");
+}
+
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
