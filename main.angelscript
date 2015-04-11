@@ -5,19 +5,24 @@
 #include "eth_util.angelscript"
 
 // constants
-const float snake_speed = 2.0f;
+const float snake_speed = 20.0f;
 const float delta_snake = 26.0f;
 const float bullet_speed = 15.0f;
 
 // variables
 int health;
+int time;
+bool directionFlag;
 vector2 moveDirection;
 vector3 headDirectionChange;
 ETHEntityArray snake;
+vector3 lastPos;
+vector3 lastPos2;
+uint numBody;
 
 void main()
 {
-	LoadScene("scenes/Main.esc", "init", "CheckHealth");
+	LoadScene("scenes/Main.esc", "init", "gameLoop");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
@@ -28,10 +33,12 @@ void init()
 	// init variables
 	health = 100;
 	moveDirection = vector2(0.0f, -snake_speed);
+	directionFlag = false;
+	numBody = snake.Size();
 	
 	// init snake body sections
 	GetEntityArray("Snake_Body.ent", snake);
-	snake[0].SetInt("target_obj", -1);
+	//snake[0].SetInt("target_obj", -1);
 	//snake[1].SetInt("target_obj", 0);
 
 	// init music and sfx
@@ -41,11 +48,31 @@ void init()
 	LoadSoundEffect("soundfx/pew.wav");
 }
 
-void CheckHealth()
+void gameLoop()
 {
+	time += 1;
+	
 	DrawText(vector2(10,10), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
-	if(health <= 0)
+	if(health <= 0){
 		GameOver();
+	}
+	
+	numBody = snake.size();
+	
+	if(time % 5 == 0) {
+		for (uint t = 0; t < numBody; t++) {
+			if(t == 0){
+				lastPos2 = snake[t].GetPosition();
+				snake[t].SetPosition(lastPos);
+			}
+			else {
+				lastPos = snake[t].GetPosition();
+				snake[t].SetPosition(lastPos2);
+				lastPos2 = lastPos;
+				lastPos = snake[t].GetPosition();
+			}
+		}
+	}
 }
 
 void GameOver()
@@ -85,34 +112,32 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
 	
-	thisEntity.AddToPositionXY(moveDirection);
-	/*const uint numBody = snake.Size();
+	if(time % 5 == 0) {
+		thisEntity.AddToPositionXY(moveDirection);
+		lastPos = thisEntity.GetPosition();
+		directionFlag = false;
+	}
 
-	for (uint t = 0; t < numBody; t++)
-    {
-		snake[t].AddToPositionXY(moveDirection);
-    }*/
-
-	if(input.GetKeyState(K_RIGHT) == KS_HIT){
-		headDirectionChange = thisEntity.GetPosition();
+	if(input.GetKeyState(K_RIGHT) == KS_HIT && !directionFlag){
+		directionFlag = true;
 		thisEntity.SetAngle(270);
 		moveDirection = vector2(snake_speed, 0.0f);
 	}
 
-	if (input.GetKeyState(K_LEFT) == KS_HIT){
-		headDirectionChange = thisEntity.GetPosition();
+	if (input.GetKeyState(K_LEFT) == KS_HIT && !directionFlag){
+		directionFlag = true;
 		thisEntity.SetAngle(90);
 		moveDirection = vector2(-snake_speed, 0.0f);
 	}
 
-	if (input.GetKeyState(K_UP) == KS_HIT){
-		headDirectionChange = thisEntity.GetPosition();
+	if (input.GetKeyState(K_UP) == KS_HIT && !directionFlag){
+		directionFlag = true;
 		thisEntity.SetAngle(0);
 		moveDirection = vector2(0.0f, -snake_speed);
 	}
 
-	if (input.GetKeyState(K_DOWN) == KS_HIT){
-		headDirectionChange = thisEntity.GetPosition();
+	if (input.GetKeyState(K_DOWN) == KS_HIT && !directionFlag){
+		directionFlag = true;
 		thisEntity.SetAngle(180);
 		moveDirection = vector2(0.0f, snake_speed);
 	}
@@ -134,7 +159,8 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 
 void ETHCallback_Snake_Body(ETHEntity@ thisEntity)
 {
-	vector2 curr_pos = thisEntity.GetPositionXY();
+	
+	/*vector2 curr_pos = thisEntity.GetPositionXY();
 	int target_x = thisEntity.GetInt("target_x");
 	int target_y = thisEntity.GetInt("target_y");
 	vector2 target_pos(target_x, target_y);
@@ -161,6 +187,7 @@ void ETHCallback_Snake_Body(ETHEntity@ thisEntity)
 	{
 		// move up 1
 		dy = -delta_snake;
+		
 	}
 
 	//thisEntity.AddToPositionXY(vector2(dx, dy));
@@ -184,6 +211,7 @@ void ETHCallback_Snake_Body(ETHEntity@ thisEntity)
 	}
 	//print("Targeting x=" + thisEntity.GetInt("target_x") + " y=" + thisEntity.GetInt("target_y"));
 	print("" + target_entity.GetPositionX() + " " + target_entity.GetPositionY());
+	*/
 }
 
 void ETHCallback_bullet(ETHEntity@ thisEntity)

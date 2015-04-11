@@ -1,28 +1,8 @@
 <?xml version="1.0" ?>
 <Ethanon>
-    <Entity shape="1" sensor="1" bullet="0" fixedRotation="0" friction="1" density="1" restitution="0" gravityScale="0" applyLight="0" castShadow="0" type="0" static="0" blendMode="0">
+    <Entity shape="0" applyLight="0" castShadow="0" type="0" static="0" blendMode="0">
         <Sprite>Snake_Body.png</Sprite>
         <Particles />
-        <Collision>
-            <Position x="0" y="0" z="0" />
-            <Size x="26" y="26" z="1" />
-        </Collision>
-        <CustomData>
-            <Variable>
-                <Type>int</Type>
-                <Name>target_obj</Name>
-                <Value>0</Value>
-            </Variable>
-            <Variable>
-                <Type>int</Type>
-                <Name>target_x</Name>
-                <Value>0</Value>
-            </Variable>
-            <Variable>
-                <Type>int</Type>
-                <Name>target_y</Name>
-                <Value>0</Value>
-            </Variable>
-        </CustomData>
+        <CustomData />
     </Entity>
 </Ethanon>

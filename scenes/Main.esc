@@ -229,6 +229,70 @@
                 <CustomData />
             </Entity>
         </Entity>
+        <Entity id="172" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="538" y="269" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="173" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="539" y="154" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="174" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="667" y="275" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="179" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="638" y="82" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="180" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="753" y="184" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="181" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="766" y="333" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="182" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="605" y="375" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="185" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="517" y="351" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
         <Entity id="3" spriteFrame="0">
             <EntityName>wall.ent</EntityName>
             <Position x="20" y="60" z="0" angle="0" />
@@ -519,34 +583,82 @@
         </Entity>
         <Entity id="1" spriteFrame="0">
             <EntityName>Snake_Head.ent</EntityName>
-            <Position x="180" y="250" z="0" angle="0" />
+            <Position x="180" y="200" z="0" angle="0" />
             <Entity>
                 <FileName>Snake_Head.ent</FileName>
                 <CustomData />
             </Entity>
         </Entity>
-        <Entity id="2" spriteFrame="0">
+        <Entity id="169" spriteFrame="0">
             <EntityName>Snake_Body.ent</EntityName>
-            <Position x="180" y="283" z="0" angle="0" />
+            <Position x="180" y="200" z="0" angle="0" />
             <Entity>
                 <FileName>Snake_Body.ent</FileName>
-                <CustomData>
-                    <Variable>
-                        <Type>int</Type>
-                        <Name>target_obj</Name>
-                        <Value>0</Value>
-                    </Variable>
-                    <Variable>
-                        <Type>int</Type>
-                        <Name>target_x</Name>
-                        <Value>0</Value>
-                    </Variable>
-                    <Variable>
-                        <Type>int</Type>
-                        <Name>target_y</Name>
-                        <Value>0</Value>
-                    </Variable>
-                </CustomData>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="170" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="386" y="214" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="171" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="339" y="329" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="175" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="234" y="278" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="176" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="302" y="228" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="177" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="340" y="137" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="178" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="455" y="104" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="183" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="217" y="396" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="184" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="98" y="256" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
+                <CustomData />
             </Entity>
         </Entity>
     </EntitiesInScene>
