@@ -5,11 +5,19 @@
         <ZAxisDirection x="0" y="-1" />
     </SceneProperties>
     <EntitiesInScene>
-        <Entity id="1" spriteFrame="0">
+        <Entity id="3" spriteFrame="0">
             <EntityName>Snake_Head.ent</EntityName>
-            <Position x="193" y="242" z="0" angle="270" />
+            <Position x="180" y="250" z="0" angle="0" />
             <Entity>
                 <FileName>Snake_Head.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="4" spriteFrame="0">
+            <EntityName>Snake_Body.ent</EntityName>
+            <Position x="180" y="283" z="0" angle="0" />
+            <Entity>
+                <FileName>Snake_Body.ent</FileName>
                 <CustomData />
             </Entity>
         </Entity>
