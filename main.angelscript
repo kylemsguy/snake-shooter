@@ -30,18 +30,28 @@ void init()
 
 void CheckHealth()
 {
+	DrawText(vector2(10,10), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	if(health <= 0)
 		GameOver();
 }
 
 void GameOver()
 {
-	snake.Clear();
-	LoadScene("scenes/gameover.esc", "", "");
 	// game over logic here
+	snake.Clear();
+	LoadScene("scenes/gameover.esc", "initGameOver", "updateGameOver");
+}
+
+void initGameOver(){
 	LoadSoundEffect("soundfx/boom.wav");
-	StopSample("bgm/Ouroboros.mp3");
+	StopSample("soundfx/Ouroboros.mp3");
 	PlaySample("soundfx/boom.wav");
+}
+
+void updateGameOver()
+{
+	DrawText(vector2(10,10), "Health: " + 0, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(360, 275), "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 }
 
 void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
