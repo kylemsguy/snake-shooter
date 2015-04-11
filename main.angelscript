@@ -5,7 +5,7 @@
 #include "eth_util.angelscript"
 
 int health;
-vector2 moveDirection = vector2(0.0f, -2.0f);
+vector2 moveDirection;
 vector3 headDirectionChange;
 ETHEntityArray snake;
 
@@ -20,6 +20,7 @@ void main()
 void init()
 {
 	health = 100;
+	moveDirection = vector2(0.0f, -2.0f);
 	GetEntityArray("Snake_Body.ent", snake);
 	LoadMusic("bgm/Ouroboros.mp3");
 	LoopSample("bgm/Ouroboros.mp3", true);
@@ -35,16 +36,25 @@ void CheckHealth()
 
 void GameOver()
 {
+	LoadScene("scenes/gameover.esc", "", "");
 	// game over logic here
 	LoadSoundEffect("soundfx/boom.wav");
 	StopSample("bgm/Ouroboros.mp3");
 	PlaySample("soundfx/boom.wav");
-	LoadScene("scenes/gameover.esc", "", "");
 }
 
 void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
 {
 	PlaySample("soundfx/pew.wav");
+}
+
+void ETHCallback_gameover(ETHEntity@ thisEntity)
+{
+	ETHInput@ input = GetInputHandle();
+	if(input.GetKeyState(K_SPACE) == KS_HIT)
+	{
+		main();
+	}
 }
 
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
