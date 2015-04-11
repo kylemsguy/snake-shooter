@@ -4,23 +4,42 @@
 
 #include "eth_util.angelscript"
 
+int health;
 vector2 moveDirection = vector2(0.0f, -2.0f);
 vector3 headDirectionChange;
 ETHEntityArray snake;
 
 void main()
 {
-	LoadScene("scenes/Main.esc", "setUp", "");
+	LoadScene("scenes/Main.esc", "init", "CheckHealth");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
 }
 
-void setUp()
+void init()
 {
-
+	health = 100;
 	GetEntityArray("Snake_Body.ent", snake);
+	LoadMusic("bgm/Ouroboros.mp3");
+	LoopSample("bgm/Ouroboros.mp3", true);
+	PlaySample("bgm/Ouroboros.mp3");
+	LoadSoundEffect("soundfx/pew.wav");
+}
 
+void CheckHealth()
+{
+	if(health <= 0)
+		GameOver();
+}
+
+void GameOver()
+{
+	// game over logic here
+	LoadSoundEffect("soundfx/boom.wav");
+	StopSample("bgm/Ouroboros.mp3");
+	PlaySample("soundfx/boom.wav");
+	LoadScene("scenes/gameover.esc", "", "");
 }
 
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
