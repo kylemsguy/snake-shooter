@@ -71,10 +71,10 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 		AddEntity("bullet.ent", thisEntity.GetPosition());
 	}
 
-	if(thisEntity.PlayParticleSystem(0))
+	/*if(thisEntity.PlayParticleSystem(0))
 	{
 		
-	}
+	}*/
 }
 
 void ETHCallback_bullet(ETHEntity@ thisEntity)
