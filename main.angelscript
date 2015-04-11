@@ -36,6 +36,7 @@ void CheckHealth()
 
 void GameOver()
 {
+	snake.Clear();
 	LoadScene("scenes/gameover.esc", "", "");
 	// game over logic here
 	LoadSoundEffect("soundfx/boom.wav");
@@ -63,6 +64,7 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	
 	thisEntity.AddToPositionXY(moveDirection);
 	const uint numBody = snake.Size();
+
 	for (uint t = 0; t < numBody; t++)
     {
 		snake[t].AddToPositionXY(moveDirection);

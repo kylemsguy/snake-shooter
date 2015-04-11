@@ -517,7 +517,7 @@
                 <CustomData />
             </Entity>
         </Entity>
-        <Entity id="163" spriteFrame="0">
+        <Entity id="1" spriteFrame="0">
             <EntityName>gameover.ent</EntityName>
             <Position x="430" y="213" z="0" angle="0" />
             <Entity>
