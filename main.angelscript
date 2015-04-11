@@ -67,3 +67,35 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 	}
 	thisEntity.AddToPositionXY(vector2(thisEntity.GetFloat("xspeed"), thisEntity.GetFloat("yspeed")));
 }
+
+void ETHBeginContactCallback_food_capsule(
+	ETHEntity@ thisEntity,
+	ETHEntity@ other,
+	vector2 contactPointA,
+	vector2 contactPointB,
+	vector2 contactNormal)
+{
+	if (other.GetEntityName() == "bullet.ent")
+	{
+		// a 'bullet.ent' hit the food capsule, that must result in an explosion
+		//explodeMyBarrel(thisEntity);
+	}
+}
+
+void ETHBeginContactCallback_snakebody(
+	ETHEntity@ thisEntity,
+	ETHEntity@ other,
+	vector2 contactPointA,
+	vector2 contactPointB,
+	vector2 contactNormal)
+{
+	if (other.GetEntityName() == "snakehead.ent")
+	{
+		// a 'snakehead.ent' hit the snake body, that must result in game over
+		//explodeMyBarrel(thisEntity);
+	}
+	else if(other.GetEntityName() == "bullet.ent")
+	{
+		// a bullet hit the body. Decrease life
+	}
+}
