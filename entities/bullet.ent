@@ -9,6 +9,11 @@
         </Collision>
         <CustomData>
             <Variable>
+                <Type>int</Type>
+                <Name>isSpeedSet</Name>
+                <Value>0</Value>
+            </Variable>
+            <Variable>
                 <Type>float</Type>
                 <Name>xspeed</Name>
                 <Value>0</Value>
