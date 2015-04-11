@@ -1,0 +1,161 @@
+<?xml version="1.0" ?>
+<Ethanon>
+    <SceneProperties lightIntensity="2" parallaxIntensity="0">
+        <Ambient r="1" g="1" b="1" />
+        <ZAxisDirection x="0" y="-1" />
+    </SceneProperties>
+    <EntitiesInScene>
+        <Entity id="25" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="540" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="26" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="580" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="27" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="60" y="580" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="28" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="100" y="580" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="29" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="140" y="580" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="30" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="180" y="580" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="31" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="220" y="580" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="13" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="60" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="14" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="100" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="15" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="140" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="16" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="180" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="17" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="220" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="18" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="260" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="19" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="300" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="20" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="340" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="21" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="380" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="22" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="420" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="23" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="460" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+        <Entity id="24" spriteFrame="0">
+            <EntityName>wall.ent</EntityName>
+            <Position x="20" y="500" z="0" angle="0" />
+            <Entity>
+                <FileName>wall.ent</FileName>
+                <CustomData />
+            </Entity>
+        </Entity>
+    </EntitiesInScene>
+</Ethanon>
