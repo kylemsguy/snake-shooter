@@ -4,67 +4,58 @@
 
 #include "eth_util.angelscript"
 
-int health = 100;
+vector2 moveDirection = vector2(0.0f, -2.0f);
+vector3 headDirectionChange;
+ETHEntityArray snake;
 
 void main()
 {
-	LoadScene("scenes/Main.esc", "init", "CheckHealth");
+	LoadScene("scenes/Main.esc", "setUp", "");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
 }
 
-void init()
+void setUp()
 {
-	health = 100;
-	LoadMusic("bgm/Ouroboros.mp3");
-	LoopSample("bgm/Ouroboros.mp3", true);
-	PlaySample("bgm/Ouroboros.mp3");
-	LoadSoundEffect("soundfx/pew.wav");
-}
 
-void CheckHealth()
-{
-	if(health <= 0)
-		GameOver();
-}
+	GetEntityArray("Snake_Body.ent", snake);
 
-void GameOver()
-{
-	// game over logic here
-	LoadSoundEffect("soundfx/boom.wav");
-	StopSample("bgm/Ouroboros.mp3");
-	PlaySample("soundfx/boom.wav");
-	LoadScene("scenes/gameover.esc", "", "");
-}
-
-void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
-{
-	PlaySample("soundfx/pew.wav");
 }
 
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
+	
+	thisEntity.AddToPositionXY(moveDirection);
+	const uint numBody = snake.Size();
+	for (uint t = 0; t < numBody; t++)
+    {
+		snake[t].AddToPositionXY(moveDirection);
+    }
 
-	if(input.KeyDown(K_RIGHT)){
+	if(input.GetKeyState(K_RIGHT) == KS_HIT){
+		headDirectionChange = thisEntity.GetPosition();
 		thisEntity.SetAngle(270);
-		thisEntity.AddToPositionXY(vector2(2.0f, 0.0f));
+		moveDirection = vector2(2.0f, 0.0f);
 	}
 
-	if (input.KeyDown(K_LEFT)){
+	if (input.GetKeyState(K_LEFT) == KS_HIT){
+		headDirectionChange = thisEntity.GetPosition();
 		thisEntity.SetAngle(90);
-		thisEntity.AddToPositionXY(vector2(-2.0f, 0.0f));
+		moveDirection = vector2(-2.0f, 0.0f);
 	}
 
-	if (input.KeyDown(K_UP)){
+	if (input.GetKeyState(K_UP) == KS_HIT){
+		headDirectionChange = thisEntity.GetPosition();
 		thisEntity.SetAngle(0);
-		thisEntity.AddToPositionXY(vector2(0.0f,-2.0f));
+		moveDirection = vector2(0.0f, -2.0f);
 	}
 
-	if (input.KeyDown(K_DOWN)){
+	if (input.GetKeyState(K_DOWN) == KS_HIT){
+		headDirectionChange = thisEntity.GetPosition();
 		thisEntity.SetAngle(180);
-		thisEntity.AddToPositionXY(vector2(0.0f, 2.0f));
+		moveDirection = vector2(0.0f, 2.0f);
 	}
 
 	if (input.GetKeyState(K_SPACE) == KS_HIT){
@@ -81,9 +72,8 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 {
 	const vector2 screenSize = GetScreenSize();
 	vector3 bulletPos = thisEntity.GetPosition();
-	int destroy = thisEntity.GetInt("destroyed");
 
-	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y || destroy > 0)
+	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y)
 	{
 		DeleteEntity(thisEntity);
 		return;
@@ -93,7 +83,7 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 
 	if(thisEntity.GetInt("isDirectionSet") == 0)
 	{
-		ETHEntity@ playerEntity = SeekEntity("Snake_Head.ent");
+		ETHEntity@ playerEntity = SeekEntity("trianglething.ent");
 		float angle = 270 - playerEntity.GetAngle();
 		float x = speed * cos(degreeToRadian(angle));
 		float y = speed * sin(degreeToRadian(angle));
@@ -119,40 +109,20 @@ void ETHBeginContactCallback_food_capsule(
 	}
 }
 
-void ETHBeginContactCallback_wall(
+void ETHBeginContactCallback_snakebody(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
 	vector2 contactPointA,
 	vector2 contactPointB,
 	vector2 contactNormal)
 {
-	if (other.GetEntityName() == "Snake_Head.ent")
+	if (other.GetEntityName() == "snakehead.ent")
 	{
-		// snake head hit wall. Game over.
-		GameOver();
+		// a 'snakehead.ent' hit the snake body, that must result in game over
+		//explodeMyBarrel(thisEntity);
 	}
 	else if(other.GetEntityName() == "bullet.ent")
 	{
-		// Destroy bullet
-		other.SetInt("destroyed", 1);
-	}
-}
-
-void ETHBeginContactCallback_snake_body(
-	ETHEntity@ thisEntity,
-	ETHEntity@ other,
-	vector2 contactPointA,
-	vector2 contactPointB,
-	vector2 contactNormal)
-{
-	if (other.GetEntityName() == "snake_head.ent")
-	{
-		// eats own body. game over.
-		GameOver();
-	}
-	else if (other.GetEntityName() == "bullet.ent")
-	{
-		// shot itself. Decrease health
-		health -= 20;
+		// a bullet hit the body. Decrease life
 	}
 }
