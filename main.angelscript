@@ -156,6 +156,20 @@ void ETHBeginContactCallback_food_capsule(
 	}
 }
 
+void ETHBeginContactCallback_food_pellet(
+	ETHEntity@ thisEntity,
+	ETHEntity@ other,
+	vector2 contactPointA,
+	vector2 contactPointB,
+	vector2 contactNormal)
+	{
+		if (other.GetEntityName() == "Snake_Head.ent")
+		{
+			// elongate tail and destroy
+			other.SetInt("destroyed", 1);
+		}
+	}
+
 void ETHBeginContactCallback_wall(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
@@ -191,6 +205,7 @@ void ETHBeginContactCallback_Snake_Body(
 	{
 		// shot itself. Decrease health
 		health -= 20;
+		other.SetInt("destroyed", 1);
 		PlayParticleEffect("fire.par", vector2(thisEntity.GetPosition().x, thisEntity.GetPosition().y), 0.0f, 1.0f);
 	}
 }

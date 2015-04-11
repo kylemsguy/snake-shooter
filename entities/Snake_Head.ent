@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <Ethanon>
-    <Entity shape="1" sensor="0" bullet="0" fixedRotation="0" friction="1" density="1" restitution="0" gravityScale="0" applyLight="0" castShadow="0" type="0" static="0" blendMode="0">
+    <Entity shape="1" sensor="1" bullet="0" fixedRotation="0" friction="1" density="1" restitution="0" gravityScale="0" applyLight="0" castShadow="0" type="0" static="0" blendMode="0">
         <Sprite>Snake_Head.png</Sprite>
         <Particles />
         <Collision>
