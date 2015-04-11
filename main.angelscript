@@ -163,7 +163,7 @@ void ETHBeginContactCallback_wall(
 	}
 }
 
-void ETHBeginContactCallback_snake_body(
+void ETHBeginContactCallback_Snake_Body(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
 	vector2 contactPointA,
