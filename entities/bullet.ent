@@ -10,6 +10,11 @@
         <CustomData>
             <Variable>
                 <Type>int</Type>
+                <Name>destroyed</Name>
+                <Value>0</Value>
+            </Variable>
+            <Variable>
+                <Type>int</Type>
                 <Name>isSpeedSet</Name>
                 <Value>0</Value>
             </Variable>
