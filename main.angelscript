@@ -4,36 +4,56 @@
 
 #include "eth_util.angelscript"
 
+vector2 moveDirection = vector2(0.0f, -2.0f);
+float headDirectionChange;
+ETHEntityArray snake;
+
 void main()
 {
-	LoadScene("empty", "", "");
+	LoadScene("scenes/Main.esc", "setUp", "");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
 }
 
-void ETHCallback_snakehead(ETHEntity@ thisEntity)
+void setUp()
+{
+
+	GetEntityArray("Snake_Body.ent", snake);
+
+}
+
+void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
+	
+	thisEntity.AddToPositionXY(moveDirection);
+	const uint numBody = snake.Size();
+	for (uint t = 0; t < numBody; t++)
+    {
+        snake[t].AddToPositionXY(moveDirection);
+		snake[t].SetAngle(thisEntity.GetAngle());
+    }
 
-	if(input.KeyDown(K_RIGHT)){
+	if(input.GetKeyState(K_RIGHT) == KS_HIT){
+		headDirectionChange = thisEntity.GetPosition();
 		thisEntity.SetAngle(270);
-		thisEntity.AddToPositionXY(vector2(2.0f, 0.0f));
+		moveDirection = vector2(2.0f, 0.0f);
 	}
 
-	if (input.KeyDown(K_LEFT)){
+	if (input.GetKeyState(K_LEFT) == KS_HIT){
 		thisEntity.SetAngle(90);
-		thisEntity.AddToPositionXY(vector2(-2.0f, 0.0f));
+		moveDirection = vector2(-2.0f, 0.0f);
 	}
 
-	if (input.KeyDown(K_UP)){
+	if (input.GetKeyState(K_UP) == KS_HIT){
 		thisEntity.SetAngle(0);
-		thisEntity.AddToPositionXY(vector2(0.0f,-2.0f));
+		moveDirection = vector2(0.0f, -2.0f);
 	}
 
-	if (input.KeyDown(K_DOWN)){
+	if (input.GetKeyState(K_DOWN) == KS_HIT){
 		thisEntity.SetAngle(180);
-		thisEntity.AddToPositionXY(vector2(0.0f, 2.0f));
+		moveDirection = vector2(0.0f, 2.0f);
 	}
 
 	if (input.GetKeyState(K_SPACE) == KS_HIT){
