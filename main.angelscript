@@ -8,7 +8,7 @@ int health = 100;
 
 void main()
 {
-	LoadScene("empty", "init", "CheckHealth");
+	LoadScene("scene/Main.esc", "init", "CheckHealth");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
