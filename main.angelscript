@@ -91,8 +91,9 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 {
 	const vector2 screenSize = GetScreenSize();
 	vector3 bulletPos = thisEntity.GetPosition();
+	int destroy = thisEntity.GetInt("destroyed");
 
-	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y)
+	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y || destroy > 0)
 	{
 		DeleteEntity(thisEntity);
 		return;
@@ -102,7 +103,7 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 
 	if(thisEntity.GetInt("isDirectionSet") == 0)
 	{
-		ETHEntity@ playerEntity = SeekEntity("trianglething.ent");
+		ETHEntity@ playerEntity = SeekEntity("Snake_Head.ent");
 		float angle = 270 - playerEntity.GetAngle();
 		float x = speed * cos(degreeToRadian(angle));
 		float y = speed * sin(degreeToRadian(angle));
@@ -128,20 +129,40 @@ void ETHBeginContactCallback_food_capsule(
 	}
 }
 
-void ETHBeginContactCallback_snakebody(
+void ETHBeginContactCallback_wall(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
 	vector2 contactPointA,
 	vector2 contactPointB,
 	vector2 contactNormal)
 {
-	if (other.GetEntityName() == "snakehead.ent")
+	if (other.GetEntityName() == "Snake_Head.ent")
 	{
-		// a 'snakehead.ent' hit the snake body, that must result in game over
-		//explodeMyBarrel(thisEntity);
+		// snake head hit wall. Game over.
+		GameOver();
 	}
 	else if(other.GetEntityName() == "bullet.ent")
 	{
-		// a bullet hit the body. Decrease life
+		// Destroy bullet
+		other.SetInt("destroyed", 1);
+	}
+}
+
+void ETHBeginContactCallback_snake_body(
+	ETHEntity@ thisEntity,
+	ETHEntity@ other,
+	vector2 contactPointA,
+	vector2 contactPointB,
+	vector2 contactNormal)
+{
+	if (other.GetEntityName() == "snake_head.ent")
+	{
+		// eats own body. game over.
+		GameOver();
+	}
+	else if (other.GetEntityName() == "bullet.ent")
+	{
+		// shot itself. Decrease health
+		health -= 20;
 	}
 }
