@@ -94,6 +94,15 @@ void updateGameOver()
 	DrawText(vector2(360, 275), "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 }
 
+vector2 getDirectionVector(float deg)
+{
+	// returns a unit vector in the direction of the given angle
+	float x = cos(degreeToRadian(deg));
+	float y = sin(degreeToRadian(deg));
+
+	return vector2(x, y);
+}
+
 void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
 {
 	PlaySample("soundfx/pew.wav");
@@ -230,8 +239,9 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 	{
 		ETHEntity@ playerEntity = SeekEntity("Snake_Head.ent");
 		float angle = 270 - playerEntity.GetAngle();
-		float x = bullet_speed * cos(degreeToRadian(angle));
-		float y = bullet_speed * sin(degreeToRadian(angle));
+		vector2 dir_vector = getDirectionVector(angle);
+		float x = bullet_speed * dir_vector.x;
+		float y = bullet_speed * dir_vector.y;
 
 		thisEntity.SetFloat("xspeed", x);
 		thisEntity.SetFloat("yspeed", y);
@@ -294,7 +304,7 @@ void ETHBeginContactCallback_Snake_Body(
 	vector2 contactPointB,
 	vector2 contactNormal)
 {
-	if (other.GetEntityName() == "snake_head.ent")
+	if (other.GetEntityName() == "Snake_Head.ent")
 	{
 		// eats own body. game over.
 		GameOver();
