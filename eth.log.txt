@@ -1,10 +1,10 @@
-[C:\Users\T\Documents\GitHub\snake-shooter\eth.log.txt]
+[C:\Users\Kyle\Documents\git-projects\snake-shooter\eth.log.txt]
 Backbuffer created as 854, 480 on default backbuffer mode
 ____________________________
 
 Loading game script from source-code: main.angelscript
 
 
-Compile time: 0 milliseconds
+Compile time: 16 milliseconds
 (Loaded) Snake_Head.png
 (Loaded) Snake_Body.png
