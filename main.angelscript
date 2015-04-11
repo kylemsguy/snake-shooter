@@ -8,7 +8,7 @@ int health = 100;
 
 void main()
 {
-	LoadScene("scene/Main.esc", "init", "CheckHealth");
+	LoadScene("scenes/Main.esc", "init", "CheckHealth");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
@@ -20,6 +20,7 @@ void init()
 	LoadMusic("bgm/Ouroboros.mp3");
 	LoopSample("bgm/Ouroboros.mp3", true);
 	PlaySample("bgm/Ouroboros.mp3");
+	LoadSoundEffect("soundfx/pew.wav");
 }
 
 void CheckHealth()
@@ -31,9 +32,18 @@ void CheckHealth()
 void GameOver()
 {
 	// game over logic here
+	LoadSoundEffect("soundfx/boom.wav");
+	StopSample("bgm/Ouroboros.mp3");
+	PlaySample("soundfx/boom.wav");
+	LoadScene("scenes/gameover.esc", "", "");
 }
 
-void ETHCallback_snakehead(ETHEntity@ thisEntity)
+void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
+{
+	PlaySample("soundfx/pew.wav");
+}
+
+void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
 
@@ -60,14 +70,20 @@ void ETHCallback_snakehead(ETHEntity@ thisEntity)
 	if (input.GetKeyState(K_SPACE) == KS_HIT){
 		AddEntity("bullet.ent", thisEntity.GetPosition());
 	}
+
+	if(thisEntity.PlayParticleSystem(0))
+	{
+		
+	}
 }
 
 void ETHCallback_bullet(ETHEntity@ thisEntity)
 {
 	const vector2 screenSize = GetScreenSize();
 	vector3 bulletPos = thisEntity.GetPosition();
+	int destroy = thisEntity.GetInt("destroyed");
 
-	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y)
+	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y || destroy > 0)
 	{
 		DeleteEntity(thisEntity);
 		return;
@@ -77,7 +93,7 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 
 	if(thisEntity.GetInt("isDirectionSet") == 0)
 	{
-		ETHEntity@ playerEntity = SeekEntity("trianglething.ent");
+		ETHEntity@ playerEntity = SeekEntity("Snake_Head.ent");
 		float angle = 270 - playerEntity.GetAngle();
 		float x = speed * cos(degreeToRadian(angle));
 		float y = speed * sin(degreeToRadian(angle));
@@ -110,7 +126,7 @@ void ETHBeginContactCallback_wall(
 	vector2 contactPointB,
 	vector2 contactNormal)
 {
-	if (other.GetEntityName() == "snakehead.ent")
+	if (other.GetEntityName() == "Snake_Head.ent")
 	{
 		// snake head hit wall. Game over.
 		GameOver();
@@ -118,7 +134,7 @@ void ETHBeginContactCallback_wall(
 	else if(other.GetEntityName() == "bullet.ent")
 	{
 		// Destroy bullet
-		DeleteEntity(other);
+		other.SetInt("destroyed", 1);
 	}
 }
 
@@ -129,7 +145,7 @@ void ETHBeginContactCallback_snake_body(
 	vector2 contactPointB,
 	vector2 contactNormal)
 {
-	if (other.GetEntityName() == "snakehead.ent")
+	if (other.GetEntityName() == "snake_head.ent")
 	{
 		// eats own body. game over.
 		GameOver();

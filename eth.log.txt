@@ -5,5 +5,10 @@ ____________________________
 Loading game script from source-code: main.angelscript
 
 
-Compile time: 0 milliseconds
+Compile time: 15 milliseconds
+(Loaded) wall.png
+(Loaded) Snake_Head.png
 (Loaded) Ouroboros.mp3
+(Loaded) pew.wav
+(Loaded) boom.wav
+(Loaded) wall.png
