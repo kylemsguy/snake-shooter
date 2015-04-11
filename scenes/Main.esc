@@ -530,7 +530,23 @@
             <Position x="180" y="283" z="0" angle="0" />
             <Entity>
                 <FileName>Snake_Body.ent</FileName>
-                <CustomData />
+                <CustomData>
+                    <Variable>
+                        <Type>int</Type>
+                        <Name>target_obj</Name>
+                        <Value>0</Value>
+                    </Variable>
+                    <Variable>
+                        <Type>int</Type>
+                        <Name>target_x</Name>
+                        <Value>0</Value>
+                    </Variable>
+                    <Variable>
+                        <Type>int</Type>
+                        <Name>target_y</Name>
+                        <Value>0</Value>
+                    </Variable>
+                </CustomData>
             </Entity>
         </Entity>
     </EntitiesInScene>

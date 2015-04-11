@@ -7,6 +7,22 @@
             <Position x="0" y="0" z="0" />
             <Size x="26" y="26" z="1" />
         </Collision>
-        <CustomData />
+        <CustomData>
+            <Variable>
+                <Type>int</Type>
+                <Name>target_obj</Name>
+                <Value>0</Value>
+            </Variable>
+            <Variable>
+                <Type>int</Type>
+                <Name>target_x</Name>
+                <Value>0</Value>
+            </Variable>
+            <Variable>
+                <Type>int</Type>
+                <Name>target_y</Name>
+                <Value>0</Value>
+            </Variable>
+        </CustomData>
     </Entity>
 </Ethanon>
