@@ -4,12 +4,33 @@
 
 #include "eth_util.angelscript"
 
+int health = 100;
+
 void main()
 {
-	LoadScene("empty", "", "");
+	LoadScene("empty", "init", "CheckHealth");
 
 	// Prefer setting window properties in the app.enml file
 	// SetWindowProperties("Ethanon Engine", 1024, 768, true, true, PF32BIT);
+}
+
+void init()
+{
+	health = 100;
+	LoadMusic("bgm/Ouroboros.mp3");
+	LoopSample("bgm/Ouroboros.mp3", true);
+	PlaySample("bgm/Ouroboros.mp3");
+}
+
+void CheckHealth()
+{
+	if(health <= 0)
+		GameOver();
+}
+
+void GameOver()
+{
+	// game over logic here
 }
 
 void ETHCallback_snakehead(ETHEntity@ thisEntity)
@@ -82,7 +103,7 @@ void ETHBeginContactCallback_food_capsule(
 	}
 }
 
-void ETHBeginContactCallback_snakebody(
+void ETHBeginContactCallback_wall(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
 	vector2 contactPointA,
@@ -91,11 +112,31 @@ void ETHBeginContactCallback_snakebody(
 {
 	if (other.GetEntityName() == "snakehead.ent")
 	{
-		// a 'snakehead.ent' hit the snake body, that must result in game over
-		//explodeMyBarrel(thisEntity);
+		// snake head hit wall. Game over.
+		GameOver();
 	}
 	else if(other.GetEntityName() == "bullet.ent")
 	{
-		// a bullet hit the body. Decrease life
+		// Destroy bullet
+		DeleteEntity(other);
+	}
+}
+
+void ETHBeginContactCallback_snake_body(
+	ETHEntity@ thisEntity,
+	ETHEntity@ other,
+	vector2 contactPointA,
+	vector2 contactPointB,
+	vector2 contactNormal)
+{
+	if (other.GetEntityName() == "snakehead.ent")
+	{
+		// eats own body. game over.
+		GameOver();
+	}
+	else if (other.GetEntityName() == "bullet.ent")
+	{
+		// shot itself. Decrease health
+		health -= 20;
 	}
 }

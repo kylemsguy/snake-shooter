@@ -1,0 +1,9 @@
+[C:\Users\Kyle\Documents\git-projects\snake-shooter\eth.log.txt]
+Backbuffer created as 854, 480 on default backbuffer mode
+____________________________
+
+Loading game script from source-code: main.angelscript
+
+
+Compile time: 0 milliseconds
+(Loaded) Ouroboros.mp3
