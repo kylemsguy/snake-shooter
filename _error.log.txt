@@ -1,5 +1,6 @@
 [C:\Users\T\Documents\GitHub\snake-shooter\_error.log.txt]
 
-[ERROR] main.angelscript, line 39: Can't implicitly convert from 'vector3' to 'float&'.
+[ERROR] main.angelscript, line 36: 'GetPosition' is not a member of 'ETHEntity'
+[ERROR] main.angelscript, line 36: Expression must be of boolean type
 ERROR - Failed while building module.
 ERROR - ETHEngine::StartEngine: no scene has been loaded.

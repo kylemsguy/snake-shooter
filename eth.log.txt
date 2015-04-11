@@ -4,10 +4,7 @@ ____________________________
 
 Loading game script from source-code: main.angelscript
 
-[INFO ] main.angelscript, line 26: Compiling void ETHCallback_Snake_Head(ETHEntity@)
 
-[ERROR] main.angelscript, line 39: Can't implicitly convert from 'vector3' to 'float&'.
-
-Compile time: 16 milliseconds
-ERROR - Failed while building module.
-ERROR - ETHEngine::StartEngine: no scene has been loaded.
+Compile time: 0 milliseconds
+(Loaded) Snake_Head.png
+(Loaded) Snake_Body.png
