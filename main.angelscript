@@ -191,5 +191,6 @@ void ETHBeginContactCallback_Snake_Body(
 	{
 		// shot itself. Decrease health
 		health -= 20;
+		PlayParticleEffect("fire.par", vector2(thisEntity.GetPosition().x, thisEntity.GetPosition().y), 0.0f, 1.0f);
 	}
 }

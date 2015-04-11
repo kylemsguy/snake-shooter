@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <Ethanon>
-    <ParticleSystem particles="50" allAtOnce="0" alphaMode="1" repeat="0" animationMode="1" boundingSphere="512" lifeTime="1200" randomLifeTime="1000" angleDir="0" randAngle="0" size="8" randomizeSize="0" growth="1.5" minSize="0" maxSize="1000" angleStart="0" randAngleStart="0">
+    <ParticleSystem particles="50" allAtOnce="0" alphaMode="1" repeat="1" animationMode="1" boundingSphere="512" lifeTime="1200" randomLifeTime="1000" angleDir="0" randAngle="0" size="8" randomizeSize="0" growth="1.5" minSize="0" maxSize="1000" angleStart="0" randAngleStart="0">
         <Bitmap>particle.png</Bitmap>
         <Gravity x="0" y="0.01" />
         <Direction x="0" y="-2.5" />
