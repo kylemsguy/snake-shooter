@@ -12,6 +12,7 @@ const float bullet_speed = 15.0f;
 // variables
 int health;
 int time;
+int score = 0;
 float difficulty;
 bool movingLeft;
 bool movingRight;
@@ -36,6 +37,7 @@ void init()
 {
 	// init variables
 	health = 100;
+	score = 0;
 	time = 0;
 	difficulty = 5.0f;
 	moveDirection = vector2(0.0f, -snake_speed);
@@ -64,11 +66,12 @@ void gameLoop()
 	time += 1;
 	
 	DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
-	DrawText(vector2(10, 20), "Score: " + snake.size(), "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(10, 20), "Score: " + score, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	difficulty = 5.0f + (snake.size() / 2);
 	
 	if(health <= 0){
 		GameOver();
+		return;
 	}
 	
 	numBody = snake.size();
@@ -104,13 +107,15 @@ void initGameOver(){
 
 void updateGameOver()
 {
-	DrawText(vector2(10,10), "Health: " + 0, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(10, 20), "Score: " + score, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	DrawText(vector2(360, 275), "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 }
 
 void incrementSnakeSection()
 {
 	int new_segment_id = AddEntity("Snake_Body.ent", vector3(-20, -20, 1));
+	score++;
 	snake.Insert(SeekEntity(new_segment_id));
 }
 
