@@ -190,7 +190,7 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 		moveDirection = vector2(0.0f, snake_speed);
 	}
 
-	if (input.GetKeyState(K_SPACE) == KS_HIT){
+	if (input.GetKeyState(K_SPACE) == KS_HIT){ // change KS_HIT to KS_DOWN for laser snake
 		vector3 facing = getDirectionVector3(270 - thisEntity.GetAngle());
 		AddEntity("bullet.ent", thisEntity.GetPosition() + facing * 10);
 	}
