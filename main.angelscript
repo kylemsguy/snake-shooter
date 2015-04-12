@@ -162,7 +162,13 @@ void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 {
 	if(thisEntity.GetInt("destroyed") != 0)
 	{
-		AddEntity("food.ent", thisEntity.GetPosition());
+		// uncomment following line to spawn food
+		//AddEntity("food.ent", thisEntity.GetPosition());
+
+		// comment following 2 lines and uncomment above line to revert to food only mode
+		incrementSnakeSection();
+		AddEntity("Food_Shell.ent", vector3(rand(50, 800), rand(50, 400), 1));
+		
 		DeleteEntity(thisEntity);
 		return;
 	}
