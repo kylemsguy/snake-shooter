@@ -114,6 +114,11 @@ void incrementSnakeSection()
 	snake.Insert(SeekEntity(new_segment_id));
 }
 
+float screenToCartesianAngle(float deg)
+{
+	return 270 - deg;
+}
+
 vector2 getDirectionVector(float deg)
 {
 	// returns a unit vector in the direction of the given angle
@@ -148,6 +153,11 @@ void ETHCallback_gameover(ETHEntity@ thisEntity)
 
 void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 {
+	if(thisEntity.GetInt("destroyed") != 0)
+	{
+		DeleteEntity(thisEntity);
+		return;
+	}
 	ETHPhysicsController@ controller = thisEntity.GetPhysicsController();
 	
 	if(time % 10 == 0){
@@ -316,6 +326,7 @@ void ETHBeginContactCallback_Food_Shell(
 {
 	if (other.GetEntityName() == "bullet.ent")
 	{
+		thisEntity.SetInt("destroyed", 1);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
 		print("hit!");
