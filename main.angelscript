@@ -155,6 +155,7 @@ void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 {
 	if(thisEntity.GetInt("destroyed") != 0)
 	{
+		AddEntity("food.ent", thisEntity.GetPosition());
 		DeleteEntity(thisEntity);
 		return;
 	}
@@ -311,8 +312,9 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 void ETHCallback_food(ETHEntity@ thisEntity)
 {
 	if(thisEntity.GetInt("destroyed") != 0)
-	{
+	{	
 		incrementSnakeSection();
+		AddEntity("Food_Shell.ent", vector3(rand(50, 800), rand(50, 400), 1));
 		DeleteEntity(thisEntity);
 	}
 }
@@ -329,7 +331,6 @@ void ETHBeginContactCallback_Food_Shell(
 		thisEntity.SetInt("destroyed", 1);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
-		print("hit!");
 	}
 }
 
