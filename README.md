@@ -1,5 +1,5 @@
 # Shooty Snake
-A snake game with a twist: You have to shoot the food before you can eat it!
+A snake game with a twist: You have to shoot the food instead of eating it!
 
 Released under the MIT License
 
