@@ -12,7 +12,7 @@ const float bullet_speed = 15.0f;
 // variables
 int health;
 int time;
-bool directionFlag;
+float difficulty;
 bool movingLeft;
 bool movingRight;
 bool movingDown;
@@ -37,8 +37,8 @@ void init()
 	// init variables
 	health = 100;
 	time = 0;
+	difficulty = 5.0f;
 	moveDirection = vector2(0.0f, -snake_speed);
-	directionFlag = false;
 	movingUp = true;
 	movingLeft = false;
 	movingRight = false;
@@ -49,7 +49,7 @@ void init()
 	// init snake body sections
 	GetEntityArray("Snake_Body.ent", snake);
 
-	//snake[1].SetInt("target_obj", 0);
+	AddEntity("Food_Shell.ent", vector3(rand(50, 800), rand(50, 400), 1));
 
 	// init music and sfx
 	LoadMusic("bgm/Ouroboros.mp3");
@@ -65,6 +65,8 @@ void gameLoop()
 	
 	DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	DrawText(vector2(10, 20), "Score: " + snake.size(), "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	difficulty = 5.0f + (snake.size() / 2);
+	
 	if(health <= 0){
 		GameOver();
 	}
@@ -144,6 +146,16 @@ void ETHCallback_gameover(ETHEntity@ thisEntity)
 	}
 }
 
+void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
+{
+	ETHPhysicsController@ controller = thisEntity.GetPhysicsController();
+	
+	if(time % 10 == 0){
+		controller.SetLinearVelocity(vector2(rand(-difficulty, difficulty), rand(-difficulty, difficulty)));
+	}
+	
+}
+
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
@@ -151,41 +163,36 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	if(time % 5 == 0) {
 		thisEntity.AddToPositionXY(moveDirection);
 		lastPos = thisEntity.GetPosition();
-		directionFlag = false;
 	}
 
-	if(input.GetKeyState(K_RIGHT) == KS_HIT && !directionFlag && !movingLeft){
+	if(input.GetKeyState(K_RIGHT) == KS_HIT && !movingLeft){
 		movingUp = false;
 		movingRight = true;
 		movingDown = false;
-		directionFlag = true;
 		thisEntity.SetAngle(270);
 		moveDirection = vector2(snake_speed, 0.0f);
 	}
 
-	if (input.GetKeyState(K_LEFT) == KS_HIT && !directionFlag && !movingRight){
+	if (input.GetKeyState(K_LEFT) == KS_HIT && !movingRight){
 		movingUp = false;
 		movingLeft = true;
 		movingDown = false;
-		directionFlag = true;
 		thisEntity.SetAngle(90);
 		moveDirection = vector2(-snake_speed, 0.0f);
 	}
 
-	if (input.GetKeyState(K_UP) == KS_HIT && !directionFlag && !movingDown){
+	if (input.GetKeyState(K_UP) == KS_HIT  && !movingDown){
 		movingUp = true;
 		movingLeft = false;
 		movingRight = false;
-		directionFlag = true;
 		thisEntity.SetAngle(0);
 		moveDirection = vector2(0.0f, -snake_speed);
 	}
 
-	if (input.GetKeyState(K_DOWN) == KS_HIT && !directionFlag && !movingUp){
+	if (input.GetKeyState(K_DOWN) == KS_HIT  && !movingUp){
 		movingLeft = false;
 		movingRight = false;
 		movingDown = true;
-		directionFlag = true;
 		thisEntity.SetAngle(180);
 		moveDirection = vector2(0.0f, snake_speed);
 	}
@@ -300,7 +307,7 @@ void ETHCallback_food(ETHEntity@ thisEntity)
 	}
 }
 
-void ETHBeginContactCallback_food_capsule(
+void ETHBeginContactCallback_Food_Shell(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
 	vector2 contactPointA,
@@ -309,6 +316,7 @@ void ETHBeginContactCallback_food_capsule(
 {
 	if (other.GetEntityName() == "bullet.ent")
 	{
+		DeleteEntity(thisEntity);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
 	}
@@ -357,8 +365,6 @@ void ETHBeginContactCallback_Snake_Body(
 {
 	if (other.GetEntityName() == "Snake_Head.ent")
 	{
-		print(other.GetPosition().x + ", " + other.GetPosition().y);
-		print(thisEntity.GetPosition().x + ", " + thisEntity.GetPosition().y);
 		// eats own body. game over.
 		GameOver();
 	}

@@ -5,7 +5,7 @@
         <ZAxisDirection x="0" y="-1" />
     </SceneProperties>
     <EntitiesInScene>
-        <Entity id="1" spriteFrame="0">
+        <Entity id="1" spriteFrame="0" shadowZ="0">
             <EntityName>Snake_Head.ent</EntityName>
             <Position x="753" y="376" z="0" angle="0" />
             <Entity>
@@ -235,20 +235,6 @@
             <Entity>
                 <FileName>wall.ent</FileName>
                 <CustomData />
-            </Entity>
-        </Entity>
-        <Entity id="271" spriteFrame="0">
-            <EntityName>food.ent</EntityName>
-            <Position x="750" y="195" z="0" angle="0" />
-            <Entity>
-                <FileName>food.ent</FileName>
-                <CustomData>
-                    <Variable>
-                        <Type>int</Type>
-                        <Name>destroyed</Name>
-                        <Value>0</Value>
-                    </Variable>
-                </CustomData>
             </Entity>
         </Entity>
         <Entity id="233" spriteFrame="0">
