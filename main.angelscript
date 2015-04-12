@@ -104,6 +104,15 @@ vector2 getDirectionVector(float deg)
 	return vector2(x, y);
 }
 
+vector3 getDirectionVector3(float deg)
+{
+	// returns a unit vector in the direction of the given angle
+	float x = cos(degreeToRadian(deg));
+	float y = sin(degreeToRadian(deg));
+
+	return vector3(x, y, 0);
+}
+
 void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
 {
 	PlaySample("soundfx/pew.wav");
@@ -153,7 +162,8 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	}
 
 	if (input.GetKeyState(K_SPACE) == KS_HIT){
-		AddEntity("bullet.ent", thisEntity.GetPosition());
+		vector3 facing = getDirectionVector3(270 - thisEntity.GetAngle());
+		AddEntity("bullet.ent", thisEntity.GetPosition() + facing * 10);
 	}
 
 	if(input.GetKeyState(K_V) == KS_HIT)
