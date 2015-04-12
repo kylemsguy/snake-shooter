@@ -56,6 +56,7 @@ void init()
 	LoopSample("bgm/Ouroboros.mp3", true);
 	PlaySample("bgm/Ouroboros.mp3");
 	LoadSoundEffect("soundfx/pew.wav");
+	LoadSoundEffect("soundfx/boom.wav");
 }
 
 void gameLoop()
@@ -194,7 +195,7 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 		AddEntity("bullet.ent", thisEntity.GetPosition() + facing * 10);
 	}
 
-	if(input.GetKeyState(K_V) == KS_HIT)
+	if(input.GetKeyState(K_V) == KS_DOWN)
 	{
 		// create new snake section
 		incrementSnakeSection();
@@ -290,6 +291,15 @@ void ETHCallback_bullet(ETHEntity@ thisEntity)
 	thisEntity.AddToPositionXY(vector2(thisEntity.GetFloat("xspeed"), thisEntity.GetFloat("yspeed")));
 }
 
+void ETHCallback_food(ETHEntity@ thisEntity)
+{
+	if(thisEntity.GetInt("destroyed") != 0)
+	{
+		incrementSnakeSection();
+		DeleteEntity(thisEntity);
+	}
+}
+
 void ETHBeginContactCallback_food_capsule(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
@@ -304,7 +314,7 @@ void ETHBeginContactCallback_food_capsule(
 	}
 }
 
-void ETHBeginContactCallback_food_pellet(
+void ETHBeginContactCallback_food(
 	ETHEntity@ thisEntity,
 	ETHEntity@ other,
 	vector2 contactPointA,
@@ -315,6 +325,7 @@ void ETHBeginContactCallback_food_pellet(
 		{
 			// elongate tail and destroy
 			other.SetInt("destroyed", 1);
+			thisEntity.SetInt("destroyed", 1);
 		}
 	}
 
@@ -357,5 +368,6 @@ void ETHBeginContactCallback_Snake_Body(
 		health -= 20;
 		other.SetInt("destroyed", 1);
 		PlayParticleEffect("fire.par", thisEntity.GetPositionXY(), 0.0f, 1.0f);
+		PlaySample("soundfx/boom.wav");
 	}
 }
