@@ -153,6 +153,11 @@ void ETHCallback_gameover(ETHEntity@ thisEntity)
 
 void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 {
+	if(thisEntity.GetInt("destroyed") != 0)
+	{
+		DeleteEntity(thisEntity);
+		return;
+	}
 	ETHPhysicsController@ controller = thisEntity.GetPhysicsController();
 	
 	if(time % 10 == 0){
@@ -321,7 +326,7 @@ void ETHBeginContactCallback_Food_Shell(
 {
 	if (other.GetEntityName() == "bullet.ent")
 	{
-		DeleteEntity(thisEntity);
+		thisEntity.SetInt("destroyed", 1);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
 	}

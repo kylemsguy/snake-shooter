@@ -7,6 +7,12 @@
             <Position x="0" y="0" z="0" />
             <Size x="20" y="20" z="1" />
         </Collision>
-        <CustomData />
+        <CustomData>
+            <Variable>
+                <Type>int</Type>
+                <Name>destroyed</Name>
+                <Value>0</Value>
+            </Variable>
+        </CustomData>
     </Entity>
 </Ethanon>
