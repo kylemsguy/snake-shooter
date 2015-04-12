@@ -316,9 +316,9 @@ void ETHBeginContactCallback_Food_Shell(
 {
 	if (other.GetEntityName() == "bullet.ent")
 	{
-		DeleteEntity(thisEntity);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
+		print("hit!");
 	}
 }
 
