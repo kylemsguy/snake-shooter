@@ -1,5 +1,7 @@
-# snake-shooter
-A snake shooter game thing lol
+# Shooty Snake
+A snake game with a twist: You have to shoot the food before you can eat it!
+
+Released under the MIT License
 
 ## Music used
 Ouroboros Kevin MacLeod (incompetech.com) 

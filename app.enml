@@ -1,6 +1,6 @@
 default
 {
-	title = Ethanon Engine;
+	title = Shooty Snake;
 	richLighting = true;
 }
 

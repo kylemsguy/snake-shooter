@@ -4,6 +4,8 @@
 
 #include "eth_util.angelscript"
 
+const bool debug = false;
+
 // constants
 const float snake_speed = 20.0f;
 const float delta_snake = 26.0f;
@@ -218,7 +220,7 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 		AddEntity("bullet.ent", thisEntity.GetPosition() + facing * 10);
 	}
 
-	if(input.GetKeyState(K_V) == KS_DOWN)
+	if(input.GetKeyState(K_V) == KS_DOWN && debug)
 	{
 		// create new snake section
 		incrementSnakeSection();
