@@ -62,7 +62,8 @@ void gameLoop()
 {
 	time += 1;
 	
-	DrawText(vector2(10,10), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(10, 20), "Score: " + snake.size(), "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	if(health <= 0){
 		GameOver();
 	}
@@ -102,6 +103,12 @@ void updateGameOver()
 {
 	DrawText(vector2(10,10), "Health: " + 0, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	DrawText(vector2(360, 275), "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+}
+
+void incrementSnakeSection()
+{
+	int new_segment_id = AddEntity("Snake_Body.ent", vector3(-20, -20, 1));
+	snake.Insert(SeekEntity(new_segment_id));
 }
 
 vector2 getDirectionVector(float deg)
@@ -190,6 +197,7 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	if(input.GetKeyState(K_V) == KS_HIT)
 	{
 		// create new snake section
+		incrementSnakeSection();
 	}
 
 	/*if(thisEntity.PlayParticleSystem(0))
