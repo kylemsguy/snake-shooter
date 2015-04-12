@@ -32,13 +32,14 @@ void init()
 {
 	// init variables
 	health = 100;
+	time = 0;
 	moveDirection = vector2(0.0f, -snake_speed);
 	directionFlag = false;
 	numBody = snake.Size();
 	
 	// init snake body sections
 	GetEntityArray("Snake_Body.ent", snake);
-	//snake[0].SetInt("target_obj", -1);
+
 	//snake[1].SetInt("target_obj", 0);
 
 	// init music and sfx
@@ -306,6 +307,8 @@ void ETHBeginContactCallback_Snake_Body(
 {
 	if (other.GetEntityName() == "Snake_Head.ent")
 	{
+		print(other.GetPosition().x + ", " + other.GetPosition().y);
+		print(thisEntity.GetPosition().x + ", " + thisEntity.GetPosition().y);
 		// eats own body. game over.
 		GameOver();
 	}

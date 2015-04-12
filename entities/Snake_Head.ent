@@ -4,8 +4,8 @@
         <Sprite>Snake_Head.png</Sprite>
         <Particles />
         <Collision>
-            <Position x="0" y="0" z="0" />
-            <Size x="20" y="20" z="1" />
+            <Position x="0" y="-15" z="0" />
+            <Size x="1" y="1" z="1" />
         </Collision>
         <CustomData />
     </Entity>
