@@ -114,6 +114,11 @@ void incrementSnakeSection()
 	snake.Insert(SeekEntity(new_segment_id));
 }
 
+float screenToCartesianAngle(float deg)
+{
+	return 270 - deg;
+}
+
 vector2 getDirectionVector(float deg)
 {
 	// returns a unit vector in the direction of the given angle
