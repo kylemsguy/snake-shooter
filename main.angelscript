@@ -13,6 +13,10 @@ const float bullet_speed = 15.0f;
 int health;
 int time;
 bool directionFlag;
+bool movingLeft;
+bool movingRight;
+bool movingDown;
+bool movingUp;
 vector2 moveDirection;
 vector3 headDirectionChange;
 ETHEntityArray snake;
@@ -35,6 +39,11 @@ void init()
 	time = 0;
 	moveDirection = vector2(0.0f, -snake_speed);
 	directionFlag = false;
+	movingUp = true;
+	movingLeft = false;
+	movingRight = false;
+	movingDown = false;
+	
 	numBody = snake.Size();
 	
 	// init snake body sections
@@ -137,25 +146,37 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 		directionFlag = false;
 	}
 
-	if(input.GetKeyState(K_RIGHT) == KS_HIT && !directionFlag){
+	if(input.GetKeyState(K_RIGHT) == KS_HIT && !directionFlag && !movingLeft){
+		movingUp = false;
+		movingRight = true;
+		movingDown = false;
 		directionFlag = true;
 		thisEntity.SetAngle(270);
 		moveDirection = vector2(snake_speed, 0.0f);
 	}
 
-	if (input.GetKeyState(K_LEFT) == KS_HIT && !directionFlag){
+	if (input.GetKeyState(K_LEFT) == KS_HIT && !directionFlag && !movingRight){
+		movingUp = false;
+		movingLeft = true;
+		movingDown = false;
 		directionFlag = true;
 		thisEntity.SetAngle(90);
 		moveDirection = vector2(-snake_speed, 0.0f);
 	}
 
-	if (input.GetKeyState(K_UP) == KS_HIT && !directionFlag){
+	if (input.GetKeyState(K_UP) == KS_HIT && !directionFlag && !movingDown){
+		movingUp = true;
+		movingLeft = false;
+		movingRight = false;
 		directionFlag = true;
 		thisEntity.SetAngle(0);
 		moveDirection = vector2(0.0f, -snake_speed);
 	}
 
-	if (input.GetKeyState(K_DOWN) == KS_HIT && !directionFlag){
+	if (input.GetKeyState(K_DOWN) == KS_HIT && !directionFlag && !movingUp){
+		movingLeft = false;
+		movingRight = false;
+		movingDown = true;
 		directionFlag = true;
 		thisEntity.SetAngle(180);
 		moveDirection = vector2(0.0f, snake_speed);
