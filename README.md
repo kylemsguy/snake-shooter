@@ -1,6 +1,10 @@
 # Shooty Snake
 A snake game with a twist: You have to shoot the food instead of eating it!
 
+Controls:
+Arrow keys: move the snake around
+Spacebar: Shoot
+
 Released under the MIT License
 
 ## Music used
