@@ -29,6 +29,8 @@ uint numBody;
 
 void main()
 {
+	SetFixedWidth(854.0f);
+	SetFixedHeight(480.0f);
 	LoadScene("scenes/Main.esc", "init", "gameLoop");
 
 	// Prefer setting window properties in the app.enml file
@@ -61,6 +63,7 @@ void init()
 	PlaySample("bgm/Ouroboros.mp3");
 	LoadSoundEffect("soundfx/pew.wav");
 	LoadSoundEffect("soundfx/boom.wav");
+	LoadSprite("entities/bullet.png");
 }
 
 void gameLoop()
