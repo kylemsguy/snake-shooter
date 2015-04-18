@@ -20,6 +20,7 @@ bool movingLeft;
 bool movingRight;
 bool movingDown;
 bool movingUp;
+vector2 screenScale;
 vector2 moveDirection;
 vector3 headDirectionChange;
 ETHEntityArray snake;
@@ -31,6 +32,12 @@ void main()
 {
 	SetFixedWidth(854.0f);
 	SetFixedHeight(480.0f);
+
+	const vector2 screenSize = GetScreenSize();
+	float xscale = screenSize.x / 854.0f;
+	float yscale = screenSize.y / 480.0f;
+	screenScale = vector2(xscale, yscale);
+
 	LoadScene("scenes/Main.esc", "init", "gameLoop");
 
 	// Prefer setting window properties in the app.enml file
@@ -114,7 +121,7 @@ void updateGameOver()
 {
 	DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	DrawText(vector2(10, 20), "Score: " + score, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
-	DrawText(vector2(360, 275), "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(360, 275) * screenScale, "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 }
 
 void incrementSnakeSection()
