@@ -11,6 +11,14 @@ const float snake_speed = 20.0f;
 const float delta_snake = 26.0f;
 const float bullet_speed = 15.0f;
 
+enum directions
+{
+	D_UP = 2,
+	D_LEFT = 4,
+	D_RIGHT = 6, 
+	D_DOWN = 8
+}
+
 // variables
 int health;
 int time;
@@ -23,6 +31,7 @@ bool movingUp;
 vector2 screenScale;
 vector2 moveDirection;
 vector3 headDirectionChange;
+ETHEntity@ snakeHead;
 ETHEntityArray snake;
 vector3 lastPos;
 vector3 lastPos2;
@@ -57,6 +66,7 @@ void init()
 	movingRight = false;
 	movingDown = false;
 	
+	@snakeHead = SeekEntity("Snake_Head.ent");
 	numBody = snake.Size();
 	
 	// init snake body sections
@@ -107,7 +117,6 @@ void gameLoop()
 void GameOver()
 {
 	// game over logic here
-	snake.Clear();
 	LoadScene("scenes/gameover.esc", "initGameOver", "updateGameOver");
 }
 
@@ -164,6 +173,7 @@ void ETHCallback_gameover(ETHEntity@ thisEntity)
 	ETHInput@ input = GetInputHandle();
 	if(input.GetKeyState(K_SPACE) == KS_HIT)
 	{
+		snake.Clear();
 		main();
 	}
 }
@@ -190,6 +200,41 @@ void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 	
 }
 
+void changeDirection(int direction)
+{
+	// 2 = up, 4 = left, 6 = right, 8 = down
+	switch(direction){
+		case D_UP:
+			movingUp = true;
+			movingLeft = false;
+			movingRight = false;
+			snakeHead.SetAngle(0);
+			moveDirection = vector2(0.0f, -snake_speed);
+			break;
+		case D_LEFT:
+			movingUp = false;
+			movingLeft = true;
+			movingDown = false;
+			snakeHead.SetAngle(90);
+			moveDirection = vector2(-snake_speed, 0.0f);
+			break;
+		case D_RIGHT:
+			movingUp = false;
+			movingRight = true;
+			movingDown = false;
+			snakeHead.SetAngle(270);
+			moveDirection = vector2(snake_speed, 0.0f);
+			break;
+		case D_DOWN:
+			movingLeft = false;
+			movingRight = false;
+			movingDown = true;
+			snakeHead.SetAngle(180);
+			moveDirection = vector2(0.0f, snake_speed);
+			break;
+	}
+}
+
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
@@ -199,36 +244,20 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 		lastPos = thisEntity.GetPosition();
 	}
 
-	if(input.GetKeyState(K_RIGHT) == KS_HIT && !movingLeft){
-		movingUp = false;
-		movingRight = true;
-		movingDown = false;
-		thisEntity.SetAngle(270);
-		moveDirection = vector2(snake_speed, 0.0f);
+	if((input.GetKeyState(K_RIGHT) == KS_HIT) && !movingLeft){
+		changeDirection(D_RIGHT);
 	}
 
-	if (input.GetKeyState(K_LEFT) == KS_HIT && !movingRight){
-		movingUp = false;
-		movingLeft = true;
-		movingDown = false;
-		thisEntity.SetAngle(90);
-		moveDirection = vector2(-snake_speed, 0.0f);
+	if ((input.GetKeyState(K_LEFT) == KS_HIT) && !movingRight){
+		changeDirection(D_LEFT);
 	}
 
-	if (input.GetKeyState(K_UP) == KS_HIT  && !movingDown){
-		movingUp = true;
-		movingLeft = false;
-		movingRight = false;
-		thisEntity.SetAngle(0);
-		moveDirection = vector2(0.0f, -snake_speed);
+	if ((input.GetKeyState(K_UP) == KS_HIT)  && !movingDown){
+		changeDirection(D_UP);
 	}
 
-	if (input.GetKeyState(K_DOWN) == KS_HIT  && !movingUp){
-		movingLeft = false;
-		movingRight = false;
-		movingDown = true;
-		thisEntity.SetAngle(180);
-		moveDirection = vector2(0.0f, snake_speed);
+	if ((input.GetKeyState(K_DOWN) == KS_HIT)  && !movingUp){
+		changeDirection(D_DOWN);
 	}
 
 	if (input.GetKeyState(K_SPACE) == KS_HIT){ // change KS_HIT to KS_DOWN for laser snake
@@ -248,70 +277,14 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	}*/
 }
 
-void ETHCallback_Snake_Body(ETHEntity@ thisEntity)
-{
-	
-	/*vector2 curr_pos = thisEntity.GetPositionXY();
-	int target_x = thisEntity.GetInt("target_x");
-	int target_y = thisEntity.GetInt("target_y");
-	vector2 target_pos(target_x, target_y);
-
-	//if(target_pos != curr_pos)
-	//	thisEntity.AddToPositionXY(target_pos - curr_pos);
-
-	float dx = 0;
-	float dy = 0;
-
-	if(curr_pos.x < target_x)
-	{
-		// move right 1
-		dx = delta_snake;
-	} else if(curr_pos.x > target_x)
-	{
-		// move left 1
-		dx = -delta_snake;
-	} else if(curr_pos.y < target_y)
-	{
-		// move down 1
-		dy = delta_snake;
-	} else if(curr_pos.y > target_y)
-	{
-		// move up 1
-		dy = -delta_snake;
-		
-	}
-
-	//thisEntity.AddToPositionXY(vector2(dx, dy));
-
-	// get next target
-	int entity_id = thisEntity.GetInt("target_obj");
-	ETHEntity@ target_entity;
-	if(entity_id < 0)
-	{
-		// targeting head
-		@target_entity = SeekEntity("Snake_Head.ent");
-	} else {
-		@target_entity = snake[entity_id];
-	}
-
-	vector2 new_target = target_entity.GetPositionXY();
-	if((new_target - thisEntity.GetPositionXY()).length() != 0)
-	{
-		thisEntity.SetInt("target_x", new_target.x);
-		thisEntity.SetInt("target_y", new_target.y);
-	}
-	//print("Targeting x=" + thisEntity.GetInt("target_x") + " y=" + thisEntity.GetInt("target_y"));
-	print("" + target_entity.GetPositionX() + " " + target_entity.GetPositionY());
-	*/
-}
-
 void ETHCallback_bullet(ETHEntity@ thisEntity)
 {
 	const vector2 screenSize = GetScreenSize();
 	vector3 bulletPos = thisEntity.GetPosition();
+	vector2 bulletPos2(bulletPos.x, bulletPos.y);
 	int destroy = thisEntity.GetInt("destroyed");
 
-	if(bulletPos.x < 0 || bulletPos.y < 0 || bulletPos.x > screenSize.x || bulletPos.y > screenSize.y || destroy > 0)
+	if(!isPointInScreen(bulletPos2) || destroy > 0)
 	{
 		DeleteEntity(thisEntity);
 		return;
@@ -352,6 +325,7 @@ void ETHBeginContactCallback_Food_Shell(
 	if (other.GetEntityName() == "bullet.ent")
 	{
 		thisEntity.SetInt("destroyed", 1);
+		other.SetInt("destroyed", 1);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
 	}
