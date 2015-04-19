@@ -247,22 +247,21 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	if((input.GetKeyState(K_RIGHT) == KS_HIT) && !movingLeft){
 		changeDirection(D_RIGHT);
 	}
-
-	if ((input.GetKeyState(K_LEFT) == KS_HIT) && !movingRight){
+	else if ((input.GetKeyState(K_LEFT) == KS_HIT) && !movingRight){
 		changeDirection(D_LEFT);
 	}
-
-	if ((input.GetKeyState(K_UP) == KS_HIT)  && !movingDown){
+	else if ((input.GetKeyState(K_UP) == KS_HIT)  && !movingDown){
 		changeDirection(D_UP);
 	}
-
-	if ((input.GetKeyState(K_DOWN) == KS_HIT)  && !movingUp){
+	else if ((input.GetKeyState(K_DOWN) == KS_HIT)  && !movingUp){
 		changeDirection(D_DOWN);
 	}
-
-	if (input.GetKeyState(K_SPACE) == KS_HIT){ // change KS_HIT to KS_DOWN for laser snake
+	else if (input.GetKeyState(K_SPACE) == KS_HIT){ // change KS_HIT to KS_DOWN for laser snake
 		vector3 facing = getDirectionVector3(270 - thisEntity.GetAngle());
 		AddEntity("bullet.ent", thisEntity.GetPosition() + facing * 10);
+	}
+	else{
+		// touch event handling here
 	}
 
 	if(input.GetKeyState(K_V) == KS_DOWN && debug)
