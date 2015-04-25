@@ -4,12 +4,22 @@
 
 #include "eth_util.angelscript"
 
-const bool debug = false;
+const bool debug = true;
 
 // constants
 const float snake_speed = 20.0f;
 const float delta_snake = 26.0f;
 const float bullet_speed = 15.0f;
+
+// touch controls
+vector2 uptouch_t(0,0);
+vector2 uptouch_b(10,10);
+vector2 downtouch_t(0,15);
+vector2 downtouch_b(10,25);
+vector2 lefttouch_t(0,0);
+vector2 lefttouch_b(10,10);
+vector2 righttouch_t(0,0);
+vector2 righttouch_b(10,10);
 
 enum directions
 {
@@ -130,7 +140,7 @@ void updateGameOver()
 {
 	DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 	DrawText(vector2(10, 20), "Score: " + score, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
-	DrawText(vector2(360, 275) * screenScale, "Press Space to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+	DrawText(vector2(360, 275) * screenScale, "Press R to Restart", "Verdana14_shadow.fnt", ARGB(250,255,255,255));
 }
 
 void incrementSnakeSection()
@@ -171,10 +181,28 @@ void ETHConstructorCallback_bullet(ETHEntity@ thisEntity)
 void ETHCallback_gameover(ETHEntity@ thisEntity)
 {
 	ETHInput@ input = GetInputHandle();
-	if(input.GetKeyState(K_SPACE) == KS_HIT)
+	if(input.GetKeyState(K_R) == KS_HIT)
 	{
 		snake.Clear();
 		main();
+	}
+	else
+	{
+		for (uint t = 0; t < input.GetMaxTouchCount(); t++)
+		{
+		    if (input.GetTouchState(t) == KS_DOWN)
+		    {
+		        vector2 touchPos = input.GetTouchPos(t);
+		        if(debug){
+		        	print("User is touching screen at " + touchPos.x + ","+ touchPos.y);
+		        }
+		        else
+		        {
+		        	snake.Clear();
+		        	main();
+		        }
+		    }
+		}
 	}
 }
 
@@ -262,6 +290,23 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 	}
 	else{
 		// touch event handling here
+		
+			for (uint t = 0; t < input.GetMaxTouchCount(); t++)
+			{
+			    if (input.GetTouchState(t) == KS_DOWN)
+			    {
+			        vector2 touchPos = input.GetTouchPos(t);
+			        if(debug)
+					{
+			        	print("User is touching screen at " + touchPos.x + ","+ touchPos.y);
+			    	}
+
+			    	// do up down left right
+			    	//if((touchPos > uptouch_t && touchpos < uptouch_b) && !movingDown)
+			    	//	changeDirection(D_UP);
+
+				}
+			}
 	}
 
 	if(input.GetKeyState(K_V) == KS_DOWN && debug)
