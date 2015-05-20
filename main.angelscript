@@ -168,6 +168,9 @@ void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 		// comment following 2 lines and uncomment above line to revert to food only mode
 		incrementSnakeSection();
 		AddEntity("Food_Shell.ent", vector3(rand(50, 800), rand(50, 400), 1));
+
+		// increment health so that high levels are possible
+		health += 10;
 		
 		DeleteEntity(thisEntity);
 		return;
