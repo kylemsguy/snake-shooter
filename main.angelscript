@@ -345,6 +345,7 @@ void ETHBeginContactCallback_Food_Shell(
 	if (other.GetEntityName() == "bullet.ent")
 	{
 		thisEntity.SetInt("destroyed", 1);
+		other.SetInt("destroyed", 1);
 		// a 'bullet.ent' hit the food capsule, that must result in an explosion
 		//explodeMyBarrel(thisEntity);
 	}
