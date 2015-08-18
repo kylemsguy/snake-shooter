@@ -90,6 +90,7 @@ void init()
 	PlaySample("bgm/Ouroboros.mp3");
 	LoadSoundEffect("soundfx/pew.wav");
 	LoadSoundEffect("soundfx/boom.wav");
+	LoadSoundEffect("soundfx/capsule_break.wav");
 	LoadSprite("entities/bullet.png");
 }
 
@@ -216,6 +217,10 @@ void ETHCallback_Food_Shell(ETHEntity@ thisEntity)
 		// comment following 2 lines and uncomment above line to revert to food only mode
 		incrementSnakeSection();
 		AddEntity("Food_Shell.ent", vector3(rand(50, 800), rand(50, 400), 1));
+
+		// comment next 2 lines if we don't want fire or sfx
+		PlaySample("soundfx/capsule_break.wav");
+		PlayParticleEffect("fire_capsule.par", thisEntity.GetPositionXY(), 0.0f, 1.0f);
 
 		// increment health so that high levels are possible
 		health += 10;
