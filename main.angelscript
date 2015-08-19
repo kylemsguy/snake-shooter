@@ -31,6 +31,7 @@ enum directions
 }
 
 // variables
+bool running;
 int health;
 int time;
 int score = 0;
@@ -67,6 +68,7 @@ void main()
 void init()
 {
     // init variables
+    running = true;
     health = 100;
     score = 0;
     time = 0;
@@ -92,44 +94,57 @@ void init()
     LoadSoundEffect("soundfx/pew.wav");
     LoadSoundEffect("soundfx/boom.wav");
     LoadSoundEffect("soundfx/capsule_break.wav");
+    LoadSoundEffect("soundfx/death.wav");
     LoadSprite("entities/bullet.png");
 }
 
 void gameLoop()
 {
-    time += 1;
+    if(running)
+    {
+        time += 1;
     
-    DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
-    DrawText(vector2(10, 20), "Score: " + score, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
-    difficulty = 5.0f + (snake.size() / 2);
-    
-    if(health <= 0){
-        GameOver();
-        return;
-    }
-    
-    numBody = snake.size();
-    
-    if(time % 5 == 0) {
-        for (uint t = 0; t < numBody; t++) {
-            if(t == 0){
-                lastPos2 = snake[t].GetPosition();
-                snake[t].SetPosition(lastPos);
-            }
-            else {
-                lastPos = snake[t].GetPosition();
-                snake[t].SetPosition(lastPos2);
-                lastPos2 = lastPos;
-                lastPos = snake[t].GetPosition();
+        DrawText(vector2(10, 5), "Health: " + health, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+        DrawText(vector2(10, 20), "Score: " + score, "Verdana14_shadow.fnt", ARGB(250,255,255,255));
+        difficulty = 5.0f + (snake.size() / 2);
+        
+        if(health <= 0){
+            GameOver();
+            return;
+        }
+        
+        numBody = snake.size();
+        
+        if(time % 5 == 0) {
+            for (uint t = 0; t < numBody; t++) {
+                if(t == 0){
+                    lastPos2 = snake[t].GetPosition();
+                    snake[t].SetPosition(lastPos);
+                }
+                else {
+                    lastPos = snake[t].GetPosition();
+                    snake[t].SetPosition(lastPos2);
+                    lastPos2 = lastPos;
+                    lastPos = snake[t].GetPosition();
+                }
             }
         }
     }
+    else
+    {
+        // do something when game not running
+    }
+    
 }
 
 void GameOver()
 {
     // game over logic here
-    LoadScene("scenes/gameover.esc", "initGameOver", "updateGameOver");
+    //LoadScene("scenes/gameover.esc", "initGameOver", "updateGameOver");
+
+    running = false;
+    StopSample("soundfx/Ouroboros.mp3");
+    PlaySample("soundfx/death.wav");
 }
 
 void initGameOver(){
@@ -274,6 +289,8 @@ void changeDirection(int direction)
 
 void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 {
+    if(!running)
+        return;
     ETHInput@ input = GetInputHandle();
     
     if(time % 5 == 0) {
