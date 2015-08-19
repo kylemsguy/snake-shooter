@@ -4,7 +4,7 @@
 
 #include "eth_util.angelscript"
 
-const bool debug = true;
+const bool debug = false;
 
 // constants
 const float snake_speed = 20.0f;
@@ -20,6 +20,10 @@ vector2 lefttouch_t(0,0);
 vector2 lefttouch_b(10,10);
 vector2 righttouch_t(0,0);
 vector2 righttouch_b(10,10);
+
+// touch controls state
+int moveTouchIndex = 0;
+
 
 enum directions
 {
@@ -132,9 +136,9 @@ void GameOver()
 }
 
 void initGameOver(){
-	LoadSoundEffect("soundfx/boom.wav");
+	LoadSoundEffect("soundfx/death.wav");
 	StopSample("soundfx/Ouroboros.mp3");
-	PlaySample("soundfx/boom.wav");
+	PlaySample("soundfx/death.wav");
 }
 
 void updateGameOver()
@@ -303,16 +307,48 @@ void ETHCallback_Snake_Head(ETHEntity@ thisEntity)
 			{
 			    if (input.GetTouchState(t) == KS_DOWN)
 			    {
-			        vector2 touchPos = input.GetTouchPos(t);
+			    	vector2 touchPos = input.GetTouchPos(t);
+			        vector2 touchMove = input.GetTouchMove(t);
 			        if(debug)
 					{
-			        	print("User is touching screen at " + touchPos.x + ","+ touchPos.y);
+			        	print("User is touching screen at " + touchMove.x + ","+ touchMove.y);
 			    	}
 
-			    	// do up down left right
-			    	//if((touchPos > uptouch_t && touchpos < uptouch_b) && !movingDown)
-			    	//	changeDirection(D_UP);
+			    	if(touchMove.x < GetScreenSize().x / 2){
+				    	if(abs(touchMove.x) > abs(touchMove.y))
+				    	{
+				    		if(touchMove.x > 0)
+				    		{
+				    			changeDirection(D_RIGHT);
+				    		}
+				    		else
+				    		{
+				    			changeDirection(D_LEFT);
+				    		}
+				    	} 
+				    	// this means if on directly diagonal, prefer vertical movements
+				    	else if(abs(touchMove.x) <= abs(touchMove.y)) 
+				    	{
+				    		if(touchMove.y > 0)
+				    		{
+				    			changeDirection(D_DOWN);
+				    		}
+				    		else
+				    		{
+				    			changeDirection(D_UP);
+				    		}
+				    	}
 
+				    	// do up down left right
+				    	//if((touchPos > uptouch_t && touchpos < uptouch_b) && !movingDown)
+				    	//	changeDirection(D_UP);
+
+					}
+				}
+				else
+				{
+					vector3 facing = getDirectionVector3(270 - thisEntity.GetAngle());
+					AddEntity("bullet.ent", thisEntity.GetPosition() + facing * 10);
 				}
 			}
 	}
